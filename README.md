@@ -4,7 +4,7 @@
 *    Author: Guillem Nicolau Alomar Sitjes      
 *    Date: July 1st, 2017                      
 *    Code version: 0.1                         
-*    Availability: Private                    
+*    Availability: Public                    
 
 This is a simple application that simulates a robot moving over a table.
 It contains
