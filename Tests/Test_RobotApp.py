@@ -4,10 +4,7 @@ import StringIO
 import sys
 
 
-class RobotAppTests(unittest.TestCase):
-    def test_check_input(self):
-        self.assertRaises(SystemExit, check_input, 'exit')
-        self.assertEquals(check_input('not_exit'), 0)
+class RobotApp_Test(unittest.TestCase):
 
     def test_message_output1(self):
         captured_output = StringIO.StringIO()
@@ -22,3 +19,7 @@ class RobotAppTests(unittest.TestCase):
         message_output2()
         sys.stdout = sys.__stdout__
         self.assertEquals(captured_output.getvalue(), "Now that the robot has been initialized, you can either:\n    a) 'PLACE x, y, orientation(NORTH,SOUTH,EAST or WEST' to define a new position\n    b) 'MOVE' the robot forward to a new position\n    c) Turn the robot 'LEFT' or 'RIGHT'\n    d) 'REPORT' current robot state\n")
+
+    def test_check_input(self):
+        self.assertRaises(SystemExit, check_input, 'exit')
+        self.assertEquals(check_input('not_exit'), 0)
