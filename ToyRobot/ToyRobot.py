@@ -16,8 +16,11 @@ class Robot:
     initialized = 0
     possible_orientations = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
-    def __init__(self):
-        pass
+    def __init__(self, place=None, orientation=None):
+        if place is not None:
+            self.place = place
+        if orientation is not None:
+            self.current_orientation = Robot.possible_orientations.index(orientation.upper())
 
     # This method defines a new position for the robot (used or the tests)
     # Input:
@@ -26,9 +29,29 @@ class Robot:
     def set_place(self, new_x, new_y):
         self.place = (new_x, new_y)
 
+    # This method defines a new orientation for the robot (used or the tests)
+    # Input:
+    #     new_orientation: new orientation for the robot
+    def set_orientation(self, new_orientation):
+        self.current_orientation = Robot.possible_orientations.index(new_orientation)
+
+    # This method returns de current position for the robot (used or the tests)
+    # Output:
+    #     (place): current robot position
+    def get_place(self):
+        return self.place
+
+    # This method returns de current orientation for the robot (used or the tests)
+    # Output:
+    #     orientation: current robot orientation
+    def get_orientation(self):
+        return Robot.possible_orientations[self.current_orientation]
+
     # This method prints the REPORT order information
     def show_current_state(self):
-        print str(self.place[0]) + "," + str(self.place[1]) + "," + self.possible_orientations[self.current_orientation]
+        print str(self.place[0]) + "," +\
+              str(self.place[1]) + "," +\
+              Robot.possible_orientations[self.current_orientation]
 
     # This method translates the orientation from the input string to a clockwise ordered number that specifies
     # the orientation (easier for turning the robot)
@@ -93,16 +116,17 @@ class Robot:
 
     # This method moves the robot to a new position
     def move(self):
-        new_place = ''
-        if self.current_orientation == 0:
-            new_place = (self.place[0], self.place[1] + 1)
-        if self.current_orientation == 1:
-            new_place = (self.place[0] + 1, self.place[1])
-        if self.current_orientation == 2:
-            new_place = (self.place[0], self.place[1] - 1)
-        if self.current_orientation == 3:
-            new_place = (self.place[0] - 1, self.place[1])
-        self.place = new_place
+        if self.check_correct_move():
+            new_place = ''
+            if self.current_orientation == 0:
+                new_place = (self.place[0], self.place[1] + 1)
+            if self.current_orientation == 1:
+                new_place = (self.place[0] + 1, self.place[1])
+            if self.current_orientation == 2:
+                new_place = (self.place[0], self.place[1] - 1)
+            if self.current_orientation == 3:
+                new_place = (self.place[0] - 1, self.place[1])
+            self.place = new_place
 
     # This method turns the robot to a new orientation
     # Input:
@@ -149,14 +173,14 @@ class Robot:
             parsed_input = Robot.check_correct_place(input_val)
             if parsed_input is not None:
                 self.position(parsed_input)
-        elif inputval_split == 'MOVE' and self.check_correct_move():
+        elif inputval_split == 'MOVE':
             self.move()
         elif inputval_split in ['LEFT', 'RIGHT']:
             self.turn(input_val)
         elif inputval_split == 'REPORT':
             self.show_current_state()
         else:
-            'Not a correct input'
+            print 'Not a correct input'
 
     # This method moves the robot to a new position
     # Input:
@@ -168,3 +192,4 @@ class Robot:
         self.place = (new_x, new_y)
         self.current_orientation = Robot.calculate_orientation(new_orientation)
         self.initialized = 1
+
