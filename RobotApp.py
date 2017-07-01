@@ -1,3 +1,12 @@
+'''
+/***********************************************
+*    Title: Moving Robot Application           *
+*    Author: Guillem Nicolau Alomar Sitjes     * 
+*    Date: July 1st, 2017                      *
+*    Code version: 0.1                         *
+*    Availability: Public                      *
+***********************************************/
+'''
 from ToyRobot.ToyRobot import Robot
 
 
