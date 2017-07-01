@@ -5,9 +5,14 @@ from ToyRobot.ToyRobot import Robot
 def check_input(input_var):
     if input_var == 'exit':
         print "The application will now end."
-        print(chr(27) + "[2J")
+        clean_screen()
         raise SystemExit
     return 0
+
+
+# Method called to do a 'clear', just for application visualization purposes
+def clean_screen():
+    print(chr(27) + "[2J")
 
 
 # Print method for the first message
@@ -28,7 +33,7 @@ def message_output2():
 
 # Main method
 if __name__ == "__main__":
-    print(chr(27) + "[2J")
+    clean_screen()
     message_output1()
     my_robot = Robot()
 
