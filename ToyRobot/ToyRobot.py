@@ -14,8 +14,8 @@ from Landscape import Landscape
 
 
 class Robot:
-    place = (-1, -1)
-    current_orientation = -1
+    # place = (-1, -1)
+    # current_orientation = -1
     initialized = 0
     possible_orientations = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
@@ -140,7 +140,7 @@ class Robot:
             else:
                 self.current_orientation = 3
         else:  # Right
-            if self.current_orientation < 4:
+            if self.current_orientation < 3:
                 self.current_orientation += 1
             else:
                 self.current_orientation = 0
@@ -170,16 +170,16 @@ class Robot:
     # Input:
     #     input_val: the input message from the user
     def parse_second_input(self, input_val):
-        inputval_split = input_val.split(' ')[0].upper()
-        if inputval_split == 'PLACE':
+        input_val_split = input_val.split(' ')[0].upper()
+        if input_val_split == 'PLACE':
             parsed_input = self.check_correct_place(input_val)
             if parsed_input is not None:
                 self.position(parsed_input)
-        elif inputval_split == 'MOVE':
+        elif input_val_split == 'MOVE':
             self.move()
-        elif inputval_split in ['LEFT', 'RIGHT']:
+        elif input_val_split in ['LEFT', 'RIGHT']:
             self.turn(input_val)
-        elif inputval_split == 'REPORT':
+        elif input_val_split == 'REPORT':
             self.show_current_state()
         else:
             print 'Not a correct input'
