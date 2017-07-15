@@ -75,7 +75,7 @@ class Robot:
     #     0 (False) if the new poisition is not valid
     #     1 (True) if the new position is valid
     def check_position(self, new_x, new_y):
-        if new_x not in range(0, self.landscape.get_dims()[0]+1) or new_y not in range(0, self.landscape.get_dims()[1]+1):
+        if new_x not in range(0, self.landscape.get_shape()[0]+1) or new_y not in range(0, self.landscape.get_shape()[1]+1):
             print "Error defining new position. The Robot must be in a table of size 5x5."
             return 0
         return 1
@@ -108,8 +108,8 @@ class Robot:
 
     # This method checks of the robot can move forward depending on its current position and orientation
     def check_correct_move(self):
-        if (self.current_orientation == 0 and self.place[1] == self.landscape.get_dims()[1]) or \
-           (self.current_orientation == 1 and self.place[0] == self.landscape.get_dims()[0]) or \
+        if (self.current_orientation == 0 and self.place[1] == self.landscape.get_shape()[1]) or \
+           (self.current_orientation == 1 and self.place[0] == self.landscape.get_shape()[0]) or \
            (self.current_orientation == 2 and self.place[1] == 0) or \
            (self.current_orientation == 3 and self.place[0] == 0):
             print "Incorrect Move, robot would fall out of the table."
