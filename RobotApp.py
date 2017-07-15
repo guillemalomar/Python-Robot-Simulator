@@ -2,7 +2,7 @@
 /***********************************************
 *    Title: Moving Robot Application           *
 *    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: July 1st, 2017                      *
+*    Date: July 15th, 2017                     *
 *    Code version: 0.1                         *
 *    Availability: Public                      *
 ***********************************************/
@@ -26,7 +26,7 @@ def clean_screen():
 
 # Print method for the first message
 def message_output1():
-    print "This is an application to place a robot on a table of 5x5.\n" \
+    print "This is an application to place a robot on a default table of 5x5.\n" \
           "After placing it, you will be able to move it all over the table.\n" \
           "First place value is on the West/East axis, second is on the North/South axis.\n" \
           "To quit the application, insert \"exit\""
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     my_robot = Robot()
 
     while not my_robot.ready():
-        var = raw_input("'PLACE x, y, orientation(NORTH,SOUTH,EAST or WEST' to define a new position:")
+        var = raw_input("Insert 'PLACE x, y, orientation(NORTH,SOUTH,EAST or WEST)' to define a new position:")
         check_input(var)
         robot_input = my_robot.parse_first_input(var)
     message_output2()

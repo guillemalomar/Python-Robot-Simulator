@@ -2,12 +2,15 @@
 /***********************************************
 *    Title: Moving Robot Application           *
 *    Author: Guillem Nicolau Alomar Sitjes     * 
-*    Date: July 1st, 2017                      *
+*    Date: July 15th, 2017                     *
 *    Code version: 0.1                         *
 *    Availability: Public                      *
 ***********************************************/
 '''
+
+
 import re
+from Landscape import Landscape
 
 
 class Robot:
@@ -16,11 +19,12 @@ class Robot:
     initialized = 0
     possible_orientations = ['NORTH', 'EAST', 'SOUTH', 'WEST']
 
-    def __init__(self, place=None, orientation=None):
+    def __init__(self, place=None, orientation=None, size=(4,4)):
         if place is not None:
             self.place = place
         if orientation is not None:
             self.current_orientation = Robot.possible_orientations.index(orientation.upper())
+        self.landscape = Landscape(size)
 
     # This method defines a new position for the robot (used or the tests)
     # Input:
@@ -70,9 +74,8 @@ class Robot:
     # Output:
     #     0 (False) if the new poisition is not valid
     #     1 (True) if the new position is valid
-    @staticmethod
-    def check_position(new_x, new_y):
-        if (new_x or new_y) not in [0, 1, 2, 3, 4]:
+    def check_position(self, new_x, new_y):
+        if new_x not in range(0, self.landscape.get_dims()[0]+1) or new_y not in range(0, self.landscape.get_dims()[1]+1):
             print "Error defining new position. The Robot must be in a table of size 5x5."
             return 0
         return 1
@@ -85,14 +88,13 @@ class Robot:
     #     input_val: the input message
     # Output:
     #     new_x, new_y, new_orientation: parsed parameters needed to place the object in a new position
-    @staticmethod
-    def check_correct_place(input_val):
+    def check_correct_place(self, input_val):
         try:
             variables = input_val.upper().split('PLACE')[1]
             new_x = int(re.sub(r'\s+', '', variables.split(',')[0]))
             new_y = int(re.sub(r'\s+', '', variables.split(',')[1]))
             new_orientation = re.sub(r'\s+', '', str(variables.split(',')[2]))
-            if Robot.check_position(new_x, new_y) and Robot.check_orientation(new_orientation):
+            if self.check_position(new_x, new_y) and Robot.check_orientation(new_orientation):
                 return new_x, new_y, new_orientation
             else:
                 print "The input message isn't valid."
@@ -106,8 +108,8 @@ class Robot:
 
     # This method checks of the robot can move forward depending on its current position and orientation
     def check_correct_move(self):
-        if (self.current_orientation == 0 and self.place[1] == 4) or \
-           (self.current_orientation == 1 and self.place[0] == 4) or \
+        if (self.current_orientation == 0 and self.place[1] == self.landscape.get_dims()[1]) or \
+           (self.current_orientation == 1 and self.place[0] == self.landscape.get_dims()[0]) or \
            (self.current_orientation == 2 and self.place[1] == 0) or \
            (self.current_orientation == 3 and self.place[0] == 0):
             print "Incorrect Move, robot would fall out of the table."
@@ -160,7 +162,7 @@ class Robot:
     # Input:
     #     input_val: the input message from the user
     def parse_first_input(self, input_val):
-        parsed_input = Robot.check_correct_place(input_val)
+        parsed_input = self.check_correct_place(input_val)
         if parsed_input is not None:
             self.position(parsed_input)
 
@@ -170,7 +172,7 @@ class Robot:
     def parse_second_input(self, input_val):
         inputval_split = input_val.split(' ')[0].upper()
         if inputval_split == 'PLACE':
-            parsed_input = Robot.check_correct_place(input_val)
+            parsed_input = self.check_correct_place(input_val)
             if parsed_input is not None:
                 self.position(parsed_input)
         elif inputval_split == 'MOVE':
@@ -192,4 +194,3 @@ class Robot:
         self.place = (new_x, new_y)
         self.current_orientation = Robot.calculate_orientation(new_orientation)
         self.initialized = 1
-
